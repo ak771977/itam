@@ -34,14 +34,22 @@ class FlippedStrategy:
         self.max_positions = int(strategy_cfg.get("max_positions", 6))
         self.max_total_volume = float(strategy_cfg.get("max_total_volume", 2.0))
 
+        # Marti-style targets (profit per lot and TP multiple for mirrored SL)
+        self.marti_profit_per_lot = float(
+            strategy_cfg.get("marti_profit_per_lot", self._default_profit_per_lot(symbol))
+        )
+        self.marti_tp_multiple = float(strategy_cfg.get("marti_tp_multiple", 2.0))
+
         # Protection parameters
-        self.hard_stop_dollars = float(strategy_cfg.get("hard_stop_dollars", 10.0))
+        self.hard_stop_dollars = float(strategy_cfg.get("hard_stop_dollars", 0.0))
         self.be_buffer_pips = float(strategy_cfg.get("be_buffer_pips", 1.0))
         self.trail_giveback_pct = float(strategy_cfg.get("trail_giveback_pct", 0.4))
         self.trail_atr_k = float(strategy_cfg.get("trail_atr_k", 0.0))
         self.trail_min_profit = float(strategy_cfg.get("trail_min_profit", 0.0))
+        self.trail_start_multiple = float(strategy_cfg.get("trail_start_multiple", 0.5))
         self.arm_after_add = bool(strategy_cfg.get("arm_after_add", True))
         self.arm_profit_dollars = float(strategy_cfg.get("arm_profit_dollars", 0.0))
+        self.be_arm_profit_multiple = float(strategy_cfg.get("be_arm_profit_multiple", 0.3))
 
         # State
         self.basket_open = False
@@ -61,6 +69,17 @@ class FlippedStrategy:
         )
 
     # --- Helpers -----------------------------------------------------
+    @staticmethod
+    def _default_profit_per_lot(symbol: str) -> float:
+        sym_upper = symbol.upper()
+        if "XAU" in sym_upper or "GOLD" in sym_upper:
+            return 134.0
+        if "JPY" in sym_upper:
+            return 49.0
+        if sym_upper == "EURUSD":
+            return 49.0
+        return 40.0
+
     def _weighted_entry(self) -> float:
         total_vol = sum(p["volume"] for p in self.basket_positions)
         if total_vol <= 0:
@@ -90,6 +109,13 @@ class FlippedStrategy:
             return
         if self.arm_profit_dollars > 0 and current_profit >= self.arm_profit_dollars:
             self._be_armed = True
+            return
+        # Dynamic BE arm based on marti-sized stop
+        total_vol = sum(p["volume"] for p in self.basket_positions)
+        marti_stop = total_vol * self.marti_profit_per_lot
+        if marti_stop > 0 and self.be_arm_profit_multiple > 0:
+            if current_profit >= marti_stop * self.be_arm_profit_multiple:
+                self._be_armed = True
 
     def _compute_next_volume(self) -> float:
         if not self.basket_positions:
@@ -155,9 +181,18 @@ class FlippedStrategy:
         current_profit = self._current_profit(current_price)
         self._update_mfe(current_profit)
         self._arm_breakeven_if_ready(current_profit)
+        total_vol = sum(p["volume"] for p in self.basket_positions)
 
-        # Tiny hard stop (fail fast)
-        if current_profit <= -self.hard_stop_dollars:
+        # Marti-style mirrored SL/TP based on profit_per_lot × total_volume
+        marti_stop = total_vol * self.marti_profit_per_lot
+        if marti_stop > 0 and current_profit <= -marti_stop:
+            return True, "MARTI_STOP"
+        marti_tp = marti_stop * self.marti_tp_multiple
+        if marti_tp > 0 and current_profit >= marti_tp:
+            return True, "MARTI_TP"
+
+        # Optional tiny hard stop (extra failsafe)
+        if self.hard_stop_dollars > 0 and current_profit <= -self.hard_stop_dollars:
             return True, "HARD_STOP"
 
         # Breakeven ratchet once armed
@@ -183,8 +218,11 @@ class FlippedStrategy:
                     if current_price > trail_price:
                         return True, "ATR_TRAIL"
 
-        # Profit giveback trail
-        if self.mfe_profit > max(self.trail_min_profit, 0):
+        # Profit giveback trail with dynamic start based on basket size
+        trail_floor = max(self.trail_min_profit, 0.0)
+        if marti_stop > 0 and self.trail_start_multiple > 0:
+            trail_floor = max(trail_floor, marti_stop * self.trail_start_multiple)
+        if self.mfe_profit > trail_floor:
             threshold = self.mfe_profit * (1 - self.trail_giveback_pct)
             if current_profit <= threshold:
                 return True, "TRAIL_GIVEBACK"
