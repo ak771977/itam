@@ -308,3 +308,5 @@ class FlippedStrategy:
 
     def mark_inherited(self, skip_marti_stop: bool = False):
         self._skip_marti_stop = skip_marti_stop
+        # Do not keep previous BE state on inherited baskets
+        self._be_armed = False

@@ -170,8 +170,8 @@ class FlippedXUMLBot:
         self.strategy.basket_positions = [
             {"price": pos.price_open, "volume": pos.volume, "ticket": pos.ticket} for pos in direction_positions
         ]
-        # Roughly re-arm BE if we already have at least 2 legs
-        self.strategy._be_armed = len(direction_positions) >= 2  # pylint: disable=protected-access
+        # Do not auto-arm BE on inherited baskets; wait for live criteria
+        self.strategy._be_armed = False  # pylint: disable=protected-access
         self.strategy.mark_synced_from_mt5()
         self.strategy.mark_inherited(skip_marti_stop=self.skip_marti_on_resume)
         self._recover_comment_state(direction_positions)
