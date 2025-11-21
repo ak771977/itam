@@ -103,5 +103,10 @@ class MT5Client:
         return closed
 
     def positions(self):
-        positions = mt5.positions_get(symbol=self.symbol, magic=self.magic_number)
-        return positions or []
+        raw = mt5.positions_get()
+        if not raw:
+            return []
+        return [
+            p for p in raw
+            if p.symbol == self.symbol and getattr(p, "magic", None) == self.magic_number
+        ]
