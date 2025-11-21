@@ -536,3 +536,77 @@
 2025-11-21 12:06:38,736 | INFO | [ML ENTRY] SELL p=0.00/1.00
 2025-11-21 12:06:44,172 | INFO | Shutdown requested, leaving MT5 positions open for resume.
 2025-11-21 12:06:44,172 | INFO | MT5 shut down
+2025-11-21 12:10:04,081 | INFO | MT5 login OK (account 48738521 @ HFMarketsGlobal-Demo)
+2025-11-21 12:10:04,081 | INFO | FlippedStrategy init | add=200.00 pips, vol0=0.01, mult=1.10, hard_stop=$0.00, trail=35%
+2025-11-21 12:10:05,441 | INFO | Found existing MT5 positions (3, SELL) but inherit_existing_basket is False; leaving untouched.
+2025-11-21 12:10:05,445 | INFO | Flipped XU ML bot ready for XAUUSD timeframe=M1
+2025-11-21 12:10:05,445 | INFO | Starting main loop poll=1.0s
+2025-11-21 12:10:07,056 | INFO | Opened SELL 0.01 @ 4043.22000 ticket=532588650
+2025-11-21 12:10:07,058 | INFO | Opened SELL basket @ 4043.22000 vol=0.01
+2025-11-21 12:10:07,058 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:11:07,454 | INFO | Opened SELL 0.01 @ 4041.15000 ticket=532591339
+2025-11-21 12:11:07,456 | INFO | Added SELL @ 4041.15000 vol=0.01 total=0.02
+2025-11-21 12:13:11,101 | INFO | Closed position 532588650 @ 4041.46000
+2025-11-21 12:13:11,301 | INFO | Closed position 532591339 @ 4041.46000
+2025-11-21 12:13:11,303 | INFO | Closed SELL basket (TRAIL_GIVEBACK): size=2 vol=0.02 PnL=$2.85
+2025-11-21 12:13:12,528 | INFO | Opened SELL 0.01 @ 4041.16000 ticket=532596415
+2025-11-21 12:13:12,530 | INFO | Opened SELL basket @ 4041.16000 vol=0.01
+2025-11-21 12:13:12,530 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:13:32,798 | INFO | Closed position 532596415 @ 4043.10000
+2025-11-21 12:13:32,800 | INFO | Closed SELL basket (MARTI_STOP): size=1 vol=0.01 PnL=$-1.49
+2025-11-21 12:13:34,026 | INFO | Opened SELL 0.01 @ 4043.07000 ticket=532597666
+2025-11-21 12:13:34,028 | INFO | Opened SELL basket @ 4043.07000 vol=0.01
+2025-11-21 12:13:34,028 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:14:00,616 | INFO | Closed position 532597666 @ 4044.86000
+2025-11-21 12:14:00,647 | INFO | Closed SELL basket (MARTI_STOP): size=1 vol=0.01 PnL=$-1.43
+2025-11-21 12:14:01,885 | INFO | Opened SELL 0.01 @ 4044.61000 ticket=532600136
+2025-11-21 12:14:01,890 | INFO | Opened SELL basket @ 4044.61000 vol=0.01
+2025-11-21 12:14:01,890 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:14:58,310 | INFO | Closed position 532600136 @ 4044.99000
+2025-11-21 12:14:58,313 | INFO | Closed SELL basket (BE_STOP): size=1 vol=0.01 PnL=$-0.12
+2025-11-21 12:14:59,538 | INFO | Opened SELL 0.01 @ 4044.21000 ticket=532603438
+2025-11-21 12:14:59,540 | INFO | Opened SELL basket @ 4044.21000 vol=0.01
+2025-11-21 12:14:59,540 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:15:50,920 | INFO | Opened SELL 0.01 @ 4042.08000 ticket=532606783
+2025-11-21 12:15:50,923 | INFO | Added SELL @ 4042.08000 vol=0.01 total=0.02
+2025-11-21 12:18:07,583 | INFO | Closed position 532603438 @ 4043.57000
+2025-11-21 12:18:07,774 | INFO | Closed position 532606783 @ 4043.66000
+2025-11-21 12:18:07,776 | INFO | Closed SELL basket (BE_STOP): size=2 vol=0.02 PnL=$-0.13
+2025-11-21 12:18:08,999 | INFO | Opened SELL 0.01 @ 4043.12000 ticket=532612342
+2025-11-21 12:18:09,001 | INFO | Opened SELL basket @ 4043.12000 vol=0.01
+2025-11-21 12:18:09,001 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:18:45,338 | INFO | Closed position 532612342 @ 4043.68000
+2025-11-21 12:18:45,340 | INFO | Closed SELL basket (BE_STOP): size=1 vol=0.01 PnL=$-0.19
+2025-11-21 12:18:46,562 | INFO | Opened SELL 0.01 @ 4043.37000 ticket=532613445
+2025-11-21 12:18:46,564 | INFO | Opened SELL basket @ 4043.37000 vol=0.01
+2025-11-21 12:18:46,564 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:20:19,424 | INFO | Shutdown requested, leaving MT5 positions open for resume.
+2025-11-21 12:20:19,425 | INFO | MT5 shut down
+2025-11-21 12:20:32,415 | INFO | MT5 login OK (account 48738521 @ HFMarketsGlobal-Demo)
+2025-11-21 12:20:32,416 | INFO | FlippedStrategy init | add=200.00 pips, vol0=0.01, mult=1.10, hard_stop=$0.00, trail=35%
+2025-11-21 12:20:33,765 | INFO | Found existing MT5 positions (7, SELL) but inherit_existing_basket is False; leaving untouched.
+2025-11-21 12:20:33,766 | INFO | Flipped XU ML bot ready for XAUUSD timeframe=M1
+2025-11-21 12:20:33,767 | INFO | Starting main loop poll=1.0s
+2025-11-21 12:20:35,551 | INFO | Opened SELL 0.01 @ 4043.98000 ticket=532616703
+2025-11-21 12:20:35,551 | INFO | Opened SELL basket @ 4043.98000 vol=0.01
+2025-11-21 12:20:35,552 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:20:43,771 | INFO | Closed position 532616703 @ 4045.81000
+2025-11-21 12:20:43,772 | INFO | Closed SELL basket (MARTI_STOP): size=1 vol=0.01 PnL=$-1.44
+2025-11-21 12:20:44,993 | INFO | Opened SELL 0.01 @ 4045.36000 ticket=532617290
+2025-11-21 12:20:44,995 | INFO | Opened SELL basket @ 4045.36000 vol=0.01
+2025-11-21 12:20:44,995 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:21:03,377 | INFO | Closed position 532617290 @ 4047.33000
+2025-11-21 12:21:03,380 | INFO | Closed SELL basket (MARTI_STOP): size=1 vol=0.01 PnL=$-1.55
+2025-11-21 12:21:04,602 | INFO | Opened SELL 0.01 @ 4047.12000 ticket=532619646
+2025-11-21 12:21:04,604 | INFO | Opened SELL basket @ 4047.12000 vol=0.01
+2025-11-21 12:21:04,604 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:21:22,854 | INFO | Opened SELL 0.01 @ 4045.10000 ticket=532621128
+2025-11-21 12:21:22,859 | INFO | Added SELL @ 4045.10000 vol=0.01 total=0.02
+2025-11-21 12:21:32,236 | INFO | Closed position 532619646 @ 4046.71000
+2025-11-21 12:21:32,427 | INFO | Closed position 532621128 @ 4046.71000
+2025-11-21 12:21:32,429 | INFO | Closed SELL basket (BE_STOP): size=2 vol=0.02 PnL=$-0.18
+2025-11-21 12:21:33,892 | INFO | Opened SELL 0.01 @ 4046.27000 ticket=532621643
+2025-11-21 12:21:33,894 | INFO | Opened SELL basket @ 4046.27000 vol=0.01
+2025-11-21 12:21:33,894 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:22:08,489 | INFO | Shutdown requested, leaving MT5 positions open for resume.
+2025-11-21 12:22:08,490 | INFO | MT5 shut down

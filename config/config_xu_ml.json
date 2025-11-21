@@ -52,6 +52,6 @@
   },
   "trading": {
     "inherit_existing_basket": true,
-    "invert_signals": false
+    "invert_signals": true
   }
 }
