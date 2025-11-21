@@ -110,7 +110,7 @@ class FlippedXUMLBot:
         self.inherit_existing_basket = bool(self.trading_cfg.get("inherit_existing_basket", False))
         self.invert_signals = bool(self.trading_cfg.get("invert_signals", False))
         self.skip_marti_on_resume = bool(self.trading_cfg.get("skip_marti_stop_on_resume", True))
-        self._comment_base = self.mt5_cfg.get("comment_base", self.symbol)
+        self._comment_base = self.mt5_cfg.get("comment_base", self.symbol).strip()
         self._next_basket_id = 1
         self._current_basket_id: Optional[int] = None
         self._position_counter = 0
@@ -199,7 +199,7 @@ class FlippedXUMLBot:
         if not self.strategy.should_add_to_basket(current_price):
             return
         next_vol = self.strategy._compute_next_volume()  # pylint: disable=protected-access
-        comment = self._build_comment(is_new_basket=False, basket_position=len(self.strategy.basket_positions) + 1)
+        comment = self._build_comment(is_new_basket=False)
         order = self.client.open_market(self.strategy.basket_direction, next_vol, comment=comment)
         self.strategy.add_to_basket(price=order.price, ticket=order.ticket)
 
@@ -219,7 +219,7 @@ class FlippedXUMLBot:
             return
 
         volume = self.strategy.initial_volume
-        comment = self._build_comment(is_new_basket=True, basket_position=1)
+        comment = self._build_comment(is_new_basket=True)
         order = self.client.open_market(signal, volume, comment=comment)
         self.strategy.open_basket(signal, order.price, ticket=order.ticket)
         logger.info("[ML ENTRY] %s p=%.2f/%.2f", signal, ml_result.get("buy_proba"), ml_result.get("sell_proba"))
@@ -254,14 +254,14 @@ class FlippedXUMLBot:
             # No parsable comments; assume one active basket and start counting from its size
             self._current_basket_id = 1 if positions else None
             self._position_counter = len(positions) if positions else 0
-            self._next_basket_id = 2 if positions else 1
+            self._next_basket_id = (self._current_basket_id + 1) if positions else 1
 
-    def _build_comment(self, is_new_basket: bool, basket_position: int) -> str:
+    def _build_comment(self, is_new_basket: bool) -> str:
         if is_new_basket or self._current_basket_id is None:
             self._current_basket_id = self._next_basket_id
             self._next_basket_id += 1
             self._position_counter = 0
-        self._position_counter = max(1, basket_position or 1)
+        self._position_counter += 1
         return f"{self._comment_base}.{self._current_basket_id}.{self._position_counter:02d}"
 
     def run(self):
