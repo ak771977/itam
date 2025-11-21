@@ -46,10 +46,11 @@ class MT5Client:
             raise RuntimeError(f"Could not fetch rates for {self.symbol}: {mt5.last_error()}")
         return rates
 
-    def open_market(self, direction: str, volume: float) -> OrderResult:
+    def open_market(self, direction: str, volume: float, comment: Optional[str] = None) -> OrderResult:
         tick = self.latest_tick()
         order_type = mt5.ORDER_TYPE_BUY if direction == "BUY" else mt5.ORDER_TYPE_SELL
         price = tick.ask if direction == "BUY" else tick.bid
+        trade_comment = comment if comment is not None else self.comment
         request = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": self.symbol,
@@ -58,7 +59,7 @@ class MT5Client:
             "price": price,
             "deviation": self.slippage_points,
             "magic": self.magic_number,
-            "comment": self.comment,
+            "comment": trade_comment,
             "type_filling": mt5.ORDER_FILLING_FOK,
         }
         result = mt5.order_send(request)

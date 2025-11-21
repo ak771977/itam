@@ -109,6 +109,10 @@ class FlippedXUMLBot:
         self.trading_cfg = self.config.get("trading", {})
         self.inherit_existing_basket = bool(self.trading_cfg.get("inherit_existing_basket", False))
         self.invert_signals = bool(self.trading_cfg.get("invert_signals", False))
+        self._comment_base = self.mt5_cfg.get("comment_base", self.symbol)
+        self._next_basket_id = 1
+        self._current_basket_id: Optional[int] = None
+        self._position_counter = 0
         self.log_archiver = LogArchiver(
             logs_dir=os.path.dirname(log_cfg.get("file", "logs/xu_ml_bot.log")) or "logs",
             months_to_keep=log_cfg.get("archive_months", 3),
@@ -162,6 +166,7 @@ class FlippedXUMLBot:
         # Roughly re-arm BE if we already have at least 2 legs
         self.strategy._be_armed = len(positions) >= 2  # pylint: disable=protected-access
         self.strategy.mark_synced_from_mt5()
+        self._recover_comment_state(positions)
         logger.info("Synced existing MT5 basket: %d legs %s (tickets=%s)", len(positions), direction, [p.ticket for p in positions])
 
     def _account_info(self):
@@ -185,12 +190,15 @@ class FlippedXUMLBot:
         tickets = [p["ticket"] for p in self.strategy.basket_positions]
         closed = self.client.close_all(tickets=tickets)
         self.strategy.close_basket(current_price, reason if closed else f"{reason}_FAILED")
+        self._current_basket_id = None
+        self._position_counter = 0
 
     def _maybe_add(self, current_price: float):
         if not self.strategy.should_add_to_basket(current_price):
             return
         next_vol = self.strategy._compute_next_volume()  # pylint: disable=protected-access
-        order = self.client.open_market(self.strategy.basket_direction, next_vol)
+        comment = self._build_comment(is_new_basket=False, basket_position=len(self.strategy.basket_positions) + 1)
+        order = self.client.open_market(self.strategy.basket_direction, next_vol, comment=comment)
         self.strategy.add_to_basket(price=order.price, ticket=order.ticket)
 
     def _maybe_open_new(self, rates):
@@ -209,9 +217,48 @@ class FlippedXUMLBot:
             return
 
         volume = self.strategy.initial_volume
-        order = self.client.open_market(signal, volume)
+        comment = self._build_comment(is_new_basket=True, basket_position=1)
+        order = self.client.open_market(signal, volume, comment=comment)
         self.strategy.open_basket(signal, order.price, ticket=order.ticket)
         logger.info("[ML ENTRY] %s p=%.2f/%.2f", signal, ml_result.get("buy_proba"), ml_result.get("sell_proba"))
+
+    def _parse_comment_ids(self, comment: str) -> tuple[Optional[int], Optional[int]]:
+        parts = (comment or "").split(".")
+        if len(parts) < 3:
+            return None, None
+        base = ".".join(parts[:-2])
+        if base != self._comment_base:
+            return None, None
+        try:
+            basket_id = int(parts[-2])
+            pos_id = int(parts[-1])
+        except ValueError:
+            return None, None
+        return basket_id, pos_id
+
+    def _recover_comment_state(self, positions):
+        parsed = []
+        for pos in positions:
+            bid, pid = self._parse_comment_ids(getattr(pos, "comment", ""))
+            if bid is not None:
+                parsed.append((bid, max(1, pid or 1)))
+        if parsed:
+            max_bid = max(b for b, _ in parsed)
+            max_pos = max(p for b, p in parsed if b == max_bid)
+            self._current_basket_id = max_bid
+            self._position_counter = max_pos
+            self._next_basket_id = max_bid + 1
+        else:
+            self._current_basket_id = None
+            self._position_counter = 0
+
+    def _build_comment(self, is_new_basket: bool, basket_position: int) -> str:
+        if is_new_basket or self._current_basket_id is None:
+            self._current_basket_id = self._next_basket_id
+            self._next_basket_id += 1
+            self._position_counter = 0
+        self._position_counter = max(1, basket_position or 1)
+        return f"{self._comment_base}.{self._current_basket_id}.{self._position_counter:02d}"
 
     def run(self):
         logger.info("Starting main loop poll=%ss", self.poll_seconds)
