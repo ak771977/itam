@@ -8,7 +8,7 @@
     "server": "HFMarketsGlobal-Demo",
     "terminal_path": "C:\\\\Program Files\\\\HFM Metatrader 5\\\\terminal64.exe",
     "magic_number": 100111,
-    "comment_base": "XU_ML_FLIPPED",
+    "comment_base": "XU_ML_FLP",
     "slippage_points": 120
   },
   "strategy": {
@@ -52,7 +52,7 @@
   },
   "trading": {
     "inherit_existing_basket": true,
-    "invert_signals": false,
+    "invert_signals": true,
     "skip_marti_stop_on_resume": true
   }
 }
