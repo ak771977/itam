@@ -52,6 +52,7 @@
   },
   "trading": {
     "inherit_existing_basket": true,
-    "invert_signals": true
+    "invert_signals": false,
+    "skip_marti_stop_on_resume": true
   }
 }

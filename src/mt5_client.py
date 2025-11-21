@@ -20,11 +20,19 @@ class OrderResult:
 
 
 class MT5Client:
-    def __init__(self, symbol: str, magic_number: int, slippage_points: int = 100, comment: str = ""):
+    def __init__(
+        self,
+        symbol: str,
+        magic_number: int,
+        slippage_points: int = 100,
+        comment: str = "",
+        comment_prefix: Optional[str] = None,
+    ):
         self.symbol = symbol
         self.magic_number = int(magic_number)
         self.slippage_points = slippage_points
         self.comment = comment
+        self.comment_prefix = (comment_prefix or "").strip() or None
 
     @staticmethod
     def connect(login: int, password: str, server: str, path: Optional[str] = None):
@@ -104,4 +112,8 @@ class MT5Client:
 
     def positions(self):
         positions = mt5.positions_get(symbol=self.symbol, magic=self.magic_number)
-        return positions or []
+        if not positions:
+            return []
+        if self.comment_prefix:
+            positions = [p for p in positions if (p.comment or "").startswith(self.comment_prefix)]
+        return positions

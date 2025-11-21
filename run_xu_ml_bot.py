@@ -133,6 +133,7 @@ class FlippedXUMLBot:
             magic_number=self.mt5_cfg.get("magic_number", 900001),
             slippage_points=slippage,
             comment=self.mt5_cfg.get("comment_base", "XU_ML_FLIPPED"),
+            comment_prefix=self._comment_base,
         )
         self.strategy = FlippedStrategy(symbol=self.symbol, config=self.config)
         self.risk_manager = RiskManager(self.config)
