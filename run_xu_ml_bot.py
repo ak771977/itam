@@ -107,6 +107,7 @@ class FlippedXUMLBot:
         self.ml_cfg = self.config.get("ml", {})
         self.mt5_cfg = self.config.get("mt5", {})
         self.trading_cfg = self.config.get("trading", {})
+        self.inherit_existing_basket = bool(self.trading_cfg.get("inherit_existing_basket", False))
         self.log_archiver = LogArchiver(
             logs_dir=os.path.dirname(log_cfg.get("file", "logs/xu_ml_bot.log")) or "logs",
             months_to_keep=log_cfg.get("archive_months", 3),
@@ -145,6 +146,13 @@ class FlippedXUMLBot:
         if not positions:
             return
         direction = "BUY" if positions[0].type == mt5.POSITION_TYPE_BUY else "SELL"
+        if not self.inherit_existing_basket:
+            logger.info(
+                "Found existing MT5 positions (%d, %s) but inherit_existing_basket is False; leaving untouched.",
+                len(positions),
+                direction,
+            )
+            return
         self.strategy.basket_open = True
         self.strategy.basket_direction = direction
         self.strategy.basket_positions = [

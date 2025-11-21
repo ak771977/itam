@@ -49,5 +49,8 @@
     "file": "logs/xu_ml_bot.log",
     "console": true,
     "archive_months": 3
+  },
+  "trading": {
+    "inherit_existing_basket": false
   }
 }
