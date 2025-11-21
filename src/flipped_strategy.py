@@ -31,6 +31,7 @@ class FlippedStrategy:
         self.add_distance_pips = float(strategy_cfg.get("add_distance_pips", 5.0))
         self.initial_volume = float(strategy_cfg.get("initial_volume", 0.02))
         self.volume_multiplier = float(strategy_cfg.get("volume_multiplier", 1.1))
+        self.volume_step = float(strategy_cfg.get("volume_step", 0.01))
         self.max_positions = int(strategy_cfg.get("max_positions", 6))
         self.max_total_volume = float(strategy_cfg.get("max_total_volume", 2.0))
 
@@ -130,8 +131,10 @@ class FlippedStrategy:
         if not self.basket_positions:
             return round(self.initial_volume, 2)
         last_vol = self.basket_positions[-1]["volume"]
-        next_vol = last_vol * self.volume_multiplier
-        return round(max(next_vol, 0.01), 2)
+        bumped = round(last_vol * self.volume_multiplier + 1e-6, 2)
+        min_step = round(last_vol + self.volume_step, 2)
+        next_vol = max(bumped, min_step, self.volume_step)
+        return round(next_vol, 2)
 
     # --- Public API --------------------------------------------------
     def open_basket(self, direction: str, price: float, ticket: int = 0) -> Dict:
