@@ -1,0 +1,70 @@
+{
+  "feature_columns": [
+    "RMI",
+    "ADX",
+    "ATR_pips",
+    "Velocity5",
+    "Velocity15",
+    "Return1",
+    "Return5",
+    "Body",
+    "Range",
+    "WickUpper",
+    "WickLower",
+    "HourSin",
+    "HourCos",
+    "price_vs_sma20",
+    "price_vs_sma50",
+    "sma20_slope5",
+    "ema20_slope5",
+    "near_sma20"
+  ],
+  "class_labels": {
+    "SELL": -1,
+    "HOLD": 0,
+    "BUY": 1
+  },
+  "metrics": {
+    "-1": {
+      "precision": 0.9666666666666667,
+      "recall": 0.8787878787878788,
+      "f1-score": 0.9206349206349206,
+      "support": 33.0
+    },
+    "1": {
+      "precision": 0.9565217391304348,
+      "recall": 0.9887640449438202,
+      "f1-score": 0.9723756906077348,
+      "support": 89.0
+    },
+    "accuracy": 0.9590163934426229,
+    "macro avg": {
+      "precision": 0.9615942028985507,
+      "recall": 0.9337759618658494,
+      "f1-score": 0.9465053056213277,
+      "support": 122.0
+    },
+    "weighted avg": {
+      "precision": 0.9592658588738417,
+      "recall": 0.9590163934426229,
+      "f1-score": 0.9583802364347604,
+      "support": 122.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      29,
+      4
+    ],
+    [
+      1,
+      88
+    ]
+  ],
+  "model_hash": "31096dcd5351d4a3409ffb918ab77c932750fda3bc5b7457611d559f86aba943",
+  "model_path": "models\\xauusd_entry_model.pkl",
+  "dataset": "data\\xauusd_ml_dataset.parquet",
+  "trained_at": "2025-11-16T21:43:07.182889+00:00",
+  "dataset_mtime": "2025-11-16T21:43:05.269790+00:00",
+  "trades_hash": "4c197e7428386a4715a69bcacef76b894a27275bf589900a205428a66a59fad0"
+}

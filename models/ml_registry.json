@@ -1,0 +1,54 @@
+{
+  "eurusd-entry": {
+    "component": "eurusd-entry",
+    "dataset_path": "data\\eurusd_ml_dataset.parquet",
+    "dataset_stats": {
+      "mtime": 1763329300.0505042,
+      "size": 60333
+    },
+    "description": "EURUSD entry classifier",
+    "last_checked_at": "2025-11-21T08:24:26.698018+00:00",
+    "meta_path": "models\\eurusd_entry_model_meta.json",
+    "model_hash": "596e488c63528eb3010c2686978b74df354ae9c83fb1119dbfe0795505ee9679",
+    "model_path": "models\\eurusd_entry_model.pkl",
+    "model_stats": {
+      "mtime": 1763329301.956817,
+      "size": 498898
+    },
+    "status": "fresh",
+    "status_reason": "Trained 4d ago; trades hash OK.",
+    "trades_hash": "5d6f934b4207eb093d662cf30c6ed128a68438a58fa66adb40595150a26d80db",
+    "trades_path": "doc\\eurusd_trades_clean.csv",
+    "trades_stats": {
+      "mtime": 1763327097.6698782,
+      "size": 254425
+    },
+    "trained_at": "2025-11-16T21:41:41.975339+00:00"
+  },
+  "xauusd-entry": {
+    "component": "xauusd-entry",
+    "dataset_path": "data\\xauusd_ml_dataset.parquet",
+    "dataset_stats": {
+      "mtime": 1763329385.2697902,
+      "size": 84617
+    },
+    "description": "XAUUSD entry classifier",
+    "last_checked_at": "2025-11-21T08:24:17.527427+00:00",
+    "meta_path": "models\\xauusd_entry_model_meta.json",
+    "model_hash": "31096dcd5351d4a3409ffb918ab77c932750fda3bc5b7457611d559f86aba943",
+    "model_path": "models\\xauusd_entry_model.pkl",
+    "model_stats": {
+      "mtime": 1763329387.160702,
+      "size": 464930
+    },
+    "status": "fresh",
+    "status_reason": "Trained 4d ago; trades hash OK.",
+    "trades_hash": "4c197e7428386a4715a69bcacef76b894a27275bf589900a205428a66a59fad0",
+    "trades_path": "doc\\xauusd_trades_clean.csv",
+    "trades_stats": {
+      "mtime": 1763327022.899266,
+      "size": 167234
+    },
+    "trained_at": "2025-11-16T21:43:07.182889+00:00"
+  }
+}

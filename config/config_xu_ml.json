@@ -4,7 +4,7 @@
   "poll_seconds": 1.0,
   "mt5": {
     "account": 48738521,
-    "password_env": "MT5_PASS",
+    "password": "P@ssw0rd123*",
     "server": "HFMarketsGlobal-Demo",
     "terminal_path": "C:\\\\Program Files\\\\HFM Metatrader 5\\\\terminal64.exe",
     "magic_number": 928344,
