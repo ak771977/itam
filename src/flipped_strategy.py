@@ -64,6 +64,7 @@ class FlippedStrategy:
         self._be_armed = False
         self._resume_grace_remaining = 0
         self._ticks_open = 0
+        self._skip_marti_stop = False
 
         self.logger.info(
             "FlippedStrategy init | add=%.2f pips, vol0=%.2f, mult=%.2f, hard_stop=$%.2f, trail=%.0f%%",
@@ -142,6 +143,7 @@ class FlippedStrategy:
         self._be_armed = False
         self._resume_grace_remaining = 0
         self._ticks_open = 0
+        self._skip_marti_stop = False
         self.logger.info("Opened %s basket @ %.5f vol=%.2f", direction, price, self.initial_volume)
         return {
             "action": "OPEN",
@@ -200,11 +202,12 @@ class FlippedStrategy:
 
         # Marti-style mirrored SL/TP based on profit_per_lot × total_volume
         marti_stop = total_vol * self.marti_profit_per_lot
-        if marti_stop > 0 and current_profit <= -marti_stop:
-            return True, "MARTI_STOP"
-        marti_tp = marti_stop * self.marti_tp_multiple
-        if marti_tp > 0 and current_profit >= marti_tp:
-            return True, "MARTI_TP"
+        if not self._skip_marti_stop:
+            if marti_stop > 0 and current_profit <= -marti_stop:
+                return True, "MARTI_STOP"
+            marti_tp = marti_stop * self.marti_tp_multiple
+            if marti_tp > 0 and current_profit >= marti_tp:
+                return True, "MARTI_TP"
 
         # Optional tiny hard stop (extra failsafe)
         if self.hard_stop_dollars > 0 and current_profit <= -self.hard_stop_dollars:
@@ -302,3 +305,6 @@ class FlippedStrategy:
         """Apply a short grace period after syncing pre-existing baskets to avoid immediate closes."""
         self._resume_grace_remaining = max(self.resume_grace_ticks, 0)
         self._ticks_open = 0
+
+    def mark_inherited(self, skip_marti_stop: bool = False):
+        self._skip_marti_stop = skip_marti_stop

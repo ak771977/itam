@@ -109,6 +109,7 @@ class FlippedXUMLBot:
         self.trading_cfg = self.config.get("trading", {})
         self.inherit_existing_basket = bool(self.trading_cfg.get("inherit_existing_basket", False))
         self.invert_signals = bool(self.trading_cfg.get("invert_signals", False))
+        self.skip_marti_on_resume = bool(self.trading_cfg.get("skip_marti_stop_on_resume", True))
         self._comment_base = self.mt5_cfg.get("comment_base", self.symbol)
         self._next_basket_id = 1
         self._current_basket_id: Optional[int] = None
@@ -166,6 +167,7 @@ class FlippedXUMLBot:
         # Roughly re-arm BE if we already have at least 2 legs
         self.strategy._be_armed = len(positions) >= 2  # pylint: disable=protected-access
         self.strategy.mark_synced_from_mt5()
+        self.strategy.mark_inherited(skip_marti_stop=self.skip_marti_on_resume)
         self._recover_comment_state(positions)
         logger.info("Synced existing MT5 basket: %d legs %s (tickets=%s)", len(positions), direction, [p.ticket for p in positions])
 
@@ -249,8 +251,10 @@ class FlippedXUMLBot:
             self._position_counter = max_pos
             self._next_basket_id = max_bid + 1
         else:
-            self._current_basket_id = None
-            self._position_counter = 0
+            # No parsable comments; assume one active basket and start counting from its size
+            self._current_basket_id = 1 if positions else None
+            self._position_counter = len(positions) if positions else 0
+            self._next_basket_id = 2 if positions else 1
 
     def _build_comment(self, is_new_basket: bool, basket_position: int) -> str:
         if is_new_basket or self._current_basket_id is None:
