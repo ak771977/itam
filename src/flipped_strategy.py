@@ -118,9 +118,11 @@ class FlippedStrategy:
             return
         if self.arm_after_add and len(self.basket_positions) >= 2:
             self._be_armed = True
+            self.logger.info("[BE] Armed via add count (positions=%d)", len(self.basket_positions))
             return
         if self.arm_profit_dollars > 0 and current_profit >= self.arm_profit_dollars:
             self._be_armed = True
+            self.logger.info("[BE] Armed via profit threshold $%.2f", self.arm_profit_dollars)
             return
         # Dynamic BE arm based on marti-sized stop
         total_vol = sum(p["volume"] for p in self.basket_positions)
@@ -128,6 +130,11 @@ class FlippedStrategy:
         if marti_stop > 0 and self.be_arm_profit_multiple > 0:
             if current_profit >= marti_stop * self.be_arm_profit_multiple:
                 self._be_armed = True
+                self.logger.info(
+                    "[BE] Armed via marti multiple (P=%.2f vs %.2f target)",
+                    current_profit,
+                    marti_stop * self.be_arm_profit_multiple,
+                )
 
     def _compute_next_volume(self) -> float:
         position_num = len(self.basket_positions) + 1  # next position index (1-based)
