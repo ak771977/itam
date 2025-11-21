@@ -1,0 +1,22 @@
+{
+  "strategy": {
+    "initial_volume": 0.02,
+    "volume_multiplier": 1.1,
+    "max_positions": 6,
+    "max_total_volume": 2.0,
+    "add_distance_pips": 5.0,
+
+    "hard_stop_dollars": 10.0,
+    "be_buffer_pips": 1.0,
+    "trail_giveback_pct": 0.4,
+    "trail_atr_k": 0.0,
+    "trail_min_profit": 0.0,
+    "arm_after_add": true,
+    "arm_profit_dollars": 0.0,
+
+    "max_drawdown_percent": 10.0
+  },
+  "risk_management": {
+    "daily_loss_limit_percent": 5.0
+  }
+}
