@@ -220,9 +220,7 @@ class FlippedXUMLBot:
                     self.log_archiver.archive_old_logs()
                 time.sleep(self.poll_seconds)
         except KeyboardInterrupt:
-            logger.info("Shutdown requested, closing baskets if any...")
-            if self.strategy.basket_open:
-                self.client.close_all()
+            logger.info("Shutdown requested, leaving MT5 positions open for resume.")
         finally:
             mt5.shutdown()
             logger.info("MT5 shut down")
