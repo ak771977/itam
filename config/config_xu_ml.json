@@ -1,0 +1,44 @@
+{
+  "symbol": "XAUUSD",
+  "timeframe": "M1",
+  "poll_seconds": 1.0,
+  "mt5": {
+    "account": 48738521,
+    "password_env": "MT5_PASS",
+    "server": "HFMarketsGlobal-Demo",
+    "terminal_path": "C:\\\\Program Files\\\\HFM Metatrader 5\\\\terminal64.exe",
+    "magic_number": 928344,
+    "comment_base": "XU_ML_FLIPPED",
+    "slippage_points": 120
+  },
+  "strategy": {
+    "initial_volume": 0.01,
+    "volume_multiplier": 1.1,
+    "max_positions": 6,
+    "max_total_volume": 2.0,
+    "add_distance_pips": 200.0,
+    "hard_stop_dollars": 10.0,
+    "be_buffer_pips": 1.0,
+    "trail_giveback_pct": 0.4,
+    "trail_atr_k": 0.0,
+    "arm_after_add": true,
+    "arm_profit_dollars": 0.0,
+    "max_drawdown_percent": 12.5
+  },
+  "risk_management": {
+    "daily_loss_limit_percent": 5.0
+  },
+  "ml": {
+    "model_path": "models/xauusd_entry_model.pkl",
+    "meta_path": "models/xauusd_entry_model_meta.json",
+    "buy_threshold": 0.62,
+    "sell_threshold": 0.6,
+    "min_probability_gap": 0.05
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "logs/xu_ml_bot.log",
+    "console": true,
+    "archive_months": 3
+  }
+}

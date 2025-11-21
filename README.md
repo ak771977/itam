@@ -39,4 +39,9 @@ This folder contains a flipped version of the martingale grid:
 - EU: `add_distance_pips = 5`, `volume_multiplier = 1.1`, `hard_stop_dollars = 10`, `be_buffer_pips = 1`, `trail_giveback_pct = 0.4`, `max_positions = 4–6`.
 - XAU: `add_distance_pips = 200`, keep the same percentages and shallow sizing.
 
+## XU ML variant (flipped exit)
+- Config: `config/config_xu_ml.json` (unique magic number, ML thresholds, logging/rotation).
+- Runner: `run_xu_ml_bot.py` (Windows helper `start_xu_ml_bot.bat` boots the venv via `bootstrap_env.py --profile xu-ml`).
+- Uses the same XAUUSD ML entry model as marti and manages baskets with `FlippedStrategy`.
+
 Backtest with your existing entry stream to calibrate `trail_giveback_pct` and `hard_stop_dollars` so expectancy stays positive while the left tail remains small.
