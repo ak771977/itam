@@ -44,5 +44,6 @@ This folder contains a flipped version of the martingale grid:
 - Runner: `run_xu_ml_bot.py` (Windows helper `start_xu_ml_bot.bat` boots the venv via `bootstrap_env.py --profile xu-ml`).
 - Uses the same XAUUSD ML entry model as marti and manages baskets with `FlippedStrategy`.
 - Marti-style guardrails: `marti_profit_per_lot` sets the mirrored SL per lot; basket closes if PnL <= -SL (TP multiple is set wide by default). Trailing starts only after hitting a fraction of that per-lot stop so profit isn’t locked too early.
+- Trading flags: `inherit_existing_basket` controls whether to pick up pre-existing MT5 positions on startup; `invert_signals` flips BUY↔SELL for quick A/B tests.
 
 Backtest with your existing entry stream to calibrate `trail_giveback_pct` and `hard_stop_dollars` so expectancy stays positive while the left tail remains small.

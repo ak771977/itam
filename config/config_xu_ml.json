@@ -51,6 +51,7 @@
     "archive_months": 3
   },
   "trading": {
-    "inherit_existing_basket": false
+    "inherit_existing_basket": false,
+    "invert_signals": false
   }
 }

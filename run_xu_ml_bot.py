@@ -108,6 +108,7 @@ class FlippedXUMLBot:
         self.mt5_cfg = self.config.get("mt5", {})
         self.trading_cfg = self.config.get("trading", {})
         self.inherit_existing_basket = bool(self.trading_cfg.get("inherit_existing_basket", False))
+        self.invert_signals = bool(self.trading_cfg.get("invert_signals", False))
         self.log_archiver = LogArchiver(
             logs_dir=os.path.dirname(log_cfg.get("file", "logs/xu_ml_bot.log")) or "logs",
             months_to_keep=log_cfg.get("archive_months", 3),
@@ -197,6 +198,9 @@ class FlippedXUMLBot:
         signal = ml_result.get("signal")
         if not signal:
             return
+        if self.invert_signals:
+            signal = "SELL" if signal == "BUY" else "BUY"
+            ml_result = {**ml_result, "signal": signal, "inverted": True}
         account_info = self._account_info()
         self.risk_manager.update_daily(account_info.get("profit", 0.0))
         ok, reason = self.risk_manager.can_open_position(account_info)
