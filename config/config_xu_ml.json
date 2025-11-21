@@ -13,7 +13,8 @@
   },
   "strategy": {
     "initial_volume": 0.01,
-    "volume_multiplier": 1.1,
+    "volume_multiplier": 1.5,
+    "repeat_same_size": 2,
     "volume_step": 0.01,
     "max_positions": 6,
     "max_total_volume": 2.0,
@@ -53,7 +54,7 @@
   },
   "trading": {
     "inherit_existing_basket": true,
-    "invert_signals": true,
-    "skip_marti_stop_on_resume": true
+    "invert_signals": false,
+    "skip_marti_stop_on_resume": false
   }
 }

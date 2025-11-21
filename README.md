@@ -45,6 +45,6 @@ This folder contains a flipped version of the martingale grid:
 - Uses the same XAUUSD ML entry model as marti and manages baskets with `FlippedStrategy`.
 - Marti-style guardrails: `marti_profit_per_lot` sets the mirrored SL per lot; basket closes if PnL <= -SL (TP multiple is set wide by default). Trailing starts only after hitting a fraction of that per-lot stop so profit isn’t locked too early.
 - Trading flags: `inherit_existing_basket` controls whether to pick up pre-existing MT5 positions on startup; `invert_signals` flips BUY↔SELL for quick A/B tests.
-- Sizing: `volume_multiplier` with a `volume_step` floor ensures each add bumps size (default step 0.01 lots so tiny grids still progress).
+- Sizing: Marti-style ladder with `volume_multiplier` (default 1.5) and `repeat_same_size` (default 2) so sizes stay convex/rounded (quantized by `volume_step`).
 
 Backtest with your existing entry stream to calibrate `trail_giveback_pct` and `hard_stop_dollars` so expectancy stays positive while the left tail remains small.

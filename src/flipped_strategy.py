@@ -6,6 +6,7 @@ Flipped grid strategy:
 """
 from typing import Dict, List, Optional, Tuple
 import logging
+import math
 
 
 class FlippedStrategy:
@@ -30,7 +31,8 @@ class FlippedStrategy:
         # Core spacing/sizing
         self.add_distance_pips = float(strategy_cfg.get("add_distance_pips", 5.0))
         self.initial_volume = float(strategy_cfg.get("initial_volume", 0.02))
-        self.volume_multiplier = float(strategy_cfg.get("volume_multiplier", 1.1))
+        self.volume_multiplier = float(strategy_cfg.get("volume_multiplier", 1.5))
+        self.repeat_same_size = int(strategy_cfg.get("repeat_same_size", 2))
         self.volume_step = float(strategy_cfg.get("volume_step", 0.01))
         self.max_positions = int(strategy_cfg.get("max_positions", 6))
         self.max_total_volume = float(strategy_cfg.get("max_total_volume", 2.0))
@@ -128,13 +130,13 @@ class FlippedStrategy:
                 self._be_armed = True
 
     def _compute_next_volume(self) -> float:
-        if not self.basket_positions:
-            return round(self.initial_volume, 2)
-        last_vol = self.basket_positions[-1]["volume"]
-        bumped = round(last_vol * self.volume_multiplier + 1e-6, 2)
-        min_step = round(last_vol + self.volume_step, 2)
-        next_vol = max(bumped, min_step, self.volume_step)
-        return round(next_vol, 2)
+        position_num = len(self.basket_positions) + 1  # next position index (1-based)
+        ladder = max(0, math.floor((position_num - 1) / max(1, self.repeat_same_size)))
+        raw = self.initial_volume * (self.volume_multiplier ** ladder)
+        # Quantize to volume_step
+        step = max(self.volume_step, 0.001)
+        quantized = math.ceil(raw / step) * step
+        return round(quantized, 2)
 
     # --- Public API --------------------------------------------------
     def open_basket(self, direction: str, price: float, ticket: int = 0) -> Dict:

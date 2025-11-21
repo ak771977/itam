@@ -109,7 +109,7 @@ class FlippedXUMLBot:
         self.trading_cfg = self.config.get("trading", {})
         self.inherit_existing_basket = bool(self.trading_cfg.get("inherit_existing_basket", False))
         self.invert_signals = bool(self.trading_cfg.get("invert_signals", False))
-        self.skip_marti_on_resume = bool(self.trading_cfg.get("skip_marti_stop_on_resume", True))
+        self.skip_marti_on_resume = bool(self.trading_cfg.get("skip_marti_stop_on_resume", False))
         self._comment_base = self.mt5_cfg.get("comment_base", self.symbol).strip()
         self._next_basket_id = 1
         self._current_basket_id: Optional[int] = None
