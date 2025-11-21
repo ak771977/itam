@@ -416,3 +416,123 @@
 2025-11-21 11:50:14,661 | INFO | Closed position 532501607 @ 4033.53000
 2025-11-21 11:50:14,849 | INFO | Closed position 532504482 @ 4033.50000
 2025-11-21 11:50:15,038 | INFO | MT5 shut down
+2025-11-21 11:54:53,439 | INFO | MT5 login OK (account 48738521 @ HFMarketsGlobal-Demo)
+2025-11-21 11:54:53,440 | INFO | FlippedStrategy init | add=200.00 pips, vol0=0.01, mult=1.10, hard_stop=$0.00, trail=25%
+2025-11-21 11:54:54,745 | INFO | Synced existing MT5 basket: 6 legs BUY
+2025-11-21 11:54:54,745 | INFO | Flipped XU ML bot ready for XAUUSD timeframe=M1
+2025-11-21 11:54:54,746 | INFO | Starting main loop poll=1.0s
+2025-11-21 11:54:54,939 | INFO | Closed position 532522755 @ 4031.33000
+2025-11-21 11:54:55,128 | INFO | Closed position 532524566 @ 4031.33000
+2025-11-21 11:54:55,316 | INFO | Closed position 532524576 @ 4031.33000
+2025-11-21 11:54:55,504 | INFO | Closed position 532527649 @ 4031.33000
+2025-11-21 11:54:55,695 | INFO | Closed position 532530644 @ 4031.33000
+2025-11-21 11:54:55,899 | INFO | Closed position 532533879 @ 4031.33000
+2025-11-21 11:54:55,899 | INFO | Closed BUY basket (MARTI_STOP): size=6 vol=0.06 PnL=$-9.26
+2025-11-21 11:54:58,968 | INFO | Opened BUY 0.01 @ 4032.16000 ticket=532536054
+2025-11-21 11:54:58,968 | INFO | Opened BUY basket @ 4032.16000 vol=0.01
+2025-11-21 11:54:58,969 | INFO | [ML ENTRY] BUY p=1.00/0.00
+2025-11-21 11:56:56,612 | INFO | Opened BUY 0.01 @ 4034.17000 ticket=532541825
+2025-11-21 11:56:56,614 | INFO | Added BUY @ 4034.17000 vol=0.01 total=0.02
+2025-11-21 11:57:29,022 | INFO | Closed position 532536054 @ 4035.69000
+2025-11-21 11:57:29,214 | INFO | Closed position 532541825 @ 4035.69000
+2025-11-21 11:57:29,403 | INFO | Closed position 532542075 @ 4035.69000
+2025-11-21 11:57:29,592 | INFO | Closed position 532542099 @ 4035.68000
+2025-11-21 11:57:29,782 | INFO | Closed position 532542129 @ 4035.68000
+2025-11-21 11:57:29,784 | INFO | Closed BUY basket (MARTI_TP): size=2 vol=0.02 PnL=$5.71
+2025-11-21 11:57:31,011 | INFO | Opened BUY 0.01 @ 4036.39000 ticket=532544496
+2025-11-21 11:57:31,014 | INFO | Opened BUY basket @ 4036.39000 vol=0.01
+2025-11-21 11:57:31,014 | INFO | [ML ENTRY] BUY p=1.00/0.00
+2025-11-21 11:59:05,581 | INFO | Opened BUY 0.01 @ 4038.63000 ticket=532550350
+2025-11-21 11:59:05,581 | INFO | Added BUY @ 4038.63000 vol=0.01 total=0.02
+2025-11-21 11:59:11,800 | INFO | Closed position 532544496 @ 4038.05000
+2025-11-21 11:59:11,991 | INFO | Closed position 532549822 @ 4038.08000
+2025-11-21 11:59:12,182 | INFO | Closed position 532549856 @ 4038.08000
+2025-11-21 11:59:12,374 | INFO | Closed position 532550350 @ 4038.08000
+2025-11-21 11:59:12,376 | INFO | Closed BUY basket (TRAIL_GIVEBACK): size=2 vol=0.02 PnL=$1.72
+2025-11-21 11:59:13,598 | INFO | Opened BUY 0.01 @ 4038.37000 ticket=532550870
+2025-11-21 11:59:13,600 | INFO | Opened BUY basket @ 4038.37000 vol=0.01
+2025-11-21 11:59:13,601 | INFO | [ML ENTRY] BUY p=0.83/0.17
+2025-11-21 11:59:47,897 | INFO | Shutdown requested, closing baskets if any...
+2025-11-21 11:59:48,085 | INFO | MT5 shut down
+2025-11-21 12:00:05,413 | INFO | MT5 login OK (account 48738521 @ HFMarketsGlobal-Demo)
+2025-11-21 12:00:05,414 | INFO | FlippedStrategy init | add=200.00 pips, vol0=0.01, mult=1.10, hard_stop=$0.00, trail=30%
+2025-11-21 12:00:06,702 | INFO | Flipped XU ML bot ready for XAUUSD timeframe=M1
+2025-11-21 12:00:06,702 | INFO | Starting main loop poll=1.0s
+2025-11-21 12:00:08,487 | INFO | Opened BUY 0.01 @ 4037.07000 ticket=532554457
+2025-11-21 12:00:08,488 | INFO | Opened BUY basket @ 4037.07000 vol=0.01
+2025-11-21 12:00:08,488 | INFO | [ML ENTRY] BUY p=1.00/0.00
+2025-11-21 12:00:55,845 | INFO | Closed position 532554457 @ 4036.51000
+2025-11-21 12:00:55,846 | INFO | Closed BUY basket (BE_STOP): size=1 vol=0.01 PnL=$-0.16
+2025-11-21 12:00:57,072 | INFO | Opened BUY 0.01 @ 4036.80000 ticket=532556593
+2025-11-21 12:00:57,074 | INFO | Opened BUY basket @ 4036.80000 vol=0.01
+2025-11-21 12:00:57,074 | INFO | [ML ENTRY] BUY p=1.00/0.00
+2025-11-21 12:01:06,299 | INFO | Closed position 532556593 @ 4035.04000
+2025-11-21 12:01:06,494 | INFO | Closed position 532556773 @ 4035.04000
+2025-11-21 12:01:06,694 | INFO | Closed position 532556903 @ 4035.13000
+2025-11-21 12:01:06,696 | INFO | Closed BUY basket (MARTI_STOP): size=1 vol=0.01 PnL=$-1.37
+2025-11-21 12:01:07,926 | INFO | Opened BUY 0.01 @ 4035.80000 ticket=532557514
+2025-11-21 12:01:07,928 | INFO | Opened BUY basket @ 4035.80000 vol=0.01
+2025-11-21 12:01:07,928 | INFO | [ML ENTRY] BUY p=1.00/0.00
+2025-11-21 12:01:09,731 | INFO | Shutdown requested, closing baskets if any...
+2025-11-21 12:01:09,919 | INFO | Closed position 532557514 @ 4035.57000
+2025-11-21 12:01:09,920 | INFO | MT5 shut down
+2025-11-21 12:01:32,819 | INFO | MT5 login OK (account 48738521 @ HFMarketsGlobal-Demo)
+2025-11-21 12:01:32,820 | INFO | FlippedStrategy init | add=200.00 pips, vol0=0.01, mult=1.10, hard_stop=$0.00, trail=35%
+2025-11-21 12:01:34,155 | INFO | Flipped XU ML bot ready for XAUUSD timeframe=M1
+2025-11-21 12:01:34,156 | INFO | Starting main loop poll=1.0s
+2025-11-21 12:01:35,789 | INFO | Opened BUY 0.01 @ 4036.30000 ticket=532558985
+2025-11-21 12:01:35,789 | INFO | Opened BUY basket @ 4036.30000 vol=0.01
+2025-11-21 12:01:35,790 | INFO | [ML ENTRY] BUY p=0.93/0.07
+2025-11-21 12:02:54,359 | INFO | Opened BUY 0.01 @ 4038.67000 ticket=532562500
+2025-11-21 12:02:54,360 | INFO | Added BUY @ 4038.67000 vol=0.01 total=0.02
+2025-11-21 12:03:18,655 | INFO | Closed position 532558985 @ 4036.74000
+2025-11-21 12:03:18,849 | INFO | Closed position 532560138 @ 4037.10000
+2025-11-21 12:03:19,040 | INFO | Closed position 532561915 @ 4037.00000
+2025-11-21 12:03:19,231 | INFO | Closed position 532562500 @ 4036.64000
+2025-11-21 12:03:19,421 | INFO | Closed position 532562725 @ 4037.01000
+2025-11-21 12:03:19,612 | INFO | Closed position 532562762 @ 4036.99000
+2025-11-21 12:03:19,615 | INFO | Closed BUY basket (BE_STOP): size=2 vol=0.02 PnL=$-0.77
+2025-11-21 12:03:20,836 | INFO | Opened SELL 0.01 @ 4036.60000 ticket=532564056
+2025-11-21 12:03:20,838 | INFO | Opened SELL basket @ 4036.60000 vol=0.01
+2025-11-21 12:03:20,838 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:03:40,093 | INFO | Closed position 532564056 @ 4038.53000
+2025-11-21 12:03:40,094 | INFO | Closed SELL basket (MARTI_STOP): size=1 vol=0.01 PnL=$-1.47
+2025-11-21 12:03:41,317 | INFO | Opened SELL 0.01 @ 4038.21000 ticket=532565107
+2025-11-21 12:03:41,317 | INFO | Opened SELL basket @ 4038.21000 vol=0.01
+2025-11-21 12:03:41,318 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:04:01,075 | INFO | Shutdown requested, closing baskets if any...
+2025-11-21 12:04:01,263 | INFO | Closed position 532565107 @ 4037.61000
+2025-11-21 12:04:01,276 | INFO | MT5 shut down
+2025-11-21 12:04:18,060 | INFO | MT5 login OK (account 48738521 @ HFMarketsGlobal-Demo)
+2025-11-21 12:04:18,061 | INFO | FlippedStrategy init | add=200.00 pips, vol0=0.01, mult=1.10, hard_stop=$0.00, trail=35%
+2025-11-21 12:04:19,389 | INFO | Flipped XU ML bot ready for XAUUSD timeframe=M1
+2025-11-21 12:04:19,390 | INFO | Starting main loop poll=1.0s
+2025-11-21 12:04:21,172 | INFO | Opened SELL 0.01 @ 4037.54000 ticket=532566653
+2025-11-21 12:04:21,174 | INFO | Opened SELL basket @ 4037.54000 vol=0.01
+2025-11-21 12:04:21,174 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:04:42,913 | INFO | Shutdown requested, leaving MT5 positions open for resume.
+2025-11-21 12:04:42,913 | INFO | MT5 shut down
+2025-11-21 12:05:15,068 | INFO | MT5 login OK (account 48738521 @ HFMarketsGlobal-Demo)
+2025-11-21 12:05:15,068 | INFO | FlippedStrategy init | add=200.00 pips, vol0=0.01, mult=1.10, hard_stop=$0.00, trail=35%
+2025-11-21 12:05:16,386 | INFO | Synced existing MT5 basket: 3 legs SELL (tickets=[532566653, 532568112, 532568125])
+2025-11-21 12:05:16,387 | INFO | Flipped XU ML bot ready for XAUUSD timeframe=M1
+2025-11-21 12:05:16,387 | INFO | Starting main loop poll=1.0s
+2025-11-21 12:05:56,725 | INFO | Closed position 532566653 @ 4037.21000
+2025-11-21 12:05:56,917 | INFO | Closed position 532568112 @ 4037.20000
+2025-11-21 12:05:57,105 | INFO | Closed position 532568125 @ 4037.28000
+2025-11-21 12:05:57,106 | INFO | Closed SELL basket (BE_STOP): size=3 vol=0.03 PnL=$-0.12
+2025-11-21 12:05:59,757 | INFO | Opened SELL 0.01 @ 4037.10000 ticket=532570802
+2025-11-21 12:05:59,757 | INFO | Opened SELL basket @ 4037.10000 vol=0.01
+2025-11-21 12:05:59,758 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:06:29,062 | INFO | Closed position 532570802 @ 4039.05000
+2025-11-21 12:06:29,062 | INFO | Closed SELL basket (MARTI_STOP): size=1 vol=0.01 PnL=$-1.59
+2025-11-21 12:06:30,293 | INFO | Opened SELL 0.01 @ 4038.30000 ticket=532572022
+2025-11-21 12:06:30,294 | INFO | Opened SELL basket @ 4038.30000 vol=0.01
+2025-11-21 12:06:30,294 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:06:37,510 | INFO | Closed position 532572022 @ 4040.04000
+2025-11-21 12:06:37,511 | INFO | Closed SELL basket (MARTI_STOP): size=1 vol=0.01 PnL=$-1.45
+2025-11-21 12:06:38,735 | INFO | Opened SELL 0.01 @ 4039.81000 ticket=532572722
+2025-11-21 12:06:38,736 | INFO | Opened SELL basket @ 4039.81000 vol=0.01
+2025-11-21 12:06:38,736 | INFO | [ML ENTRY] SELL p=0.00/1.00
+2025-11-21 12:06:44,172 | INFO | Shutdown requested, leaving MT5 positions open for resume.
+2025-11-21 12:06:44,172 | INFO | MT5 shut down
