@@ -151,7 +151,13 @@ class FlippedXUMLBot:
         positions = self.client.positions()
         if not positions:
             return
-        direction = "BUY" if positions[0].type == mt5.POSITION_TYPE_BUY else "SELL"
+        # Pick the dominant direction and ignore the opposite side
+        buys = [p for p in positions if p.type == mt5.POSITION_TYPE_BUY]
+        sells = [p for p in positions if p.type == mt5.POSITION_TYPE_SELL]
+        direction_positions = buys if len(buys) >= len(sells) else sells
+        if not direction_positions:
+            return
+        direction = "BUY" if direction_positions[0].type == mt5.POSITION_TYPE_BUY else "SELL"
         if not self.inherit_existing_basket:
             logger.info(
                 "Found existing MT5 positions (%d, %s) but inherit_existing_basket is False; leaving untouched.",
@@ -162,14 +168,19 @@ class FlippedXUMLBot:
         self.strategy.basket_open = True
         self.strategy.basket_direction = direction
         self.strategy.basket_positions = [
-            {"price": pos.price_open, "volume": pos.volume, "ticket": pos.ticket} for pos in positions
+            {"price": pos.price_open, "volume": pos.volume, "ticket": pos.ticket} for pos in direction_positions
         ]
         # Roughly re-arm BE if we already have at least 2 legs
-        self.strategy._be_armed = len(positions) >= 2  # pylint: disable=protected-access
+        self.strategy._be_armed = len(direction_positions) >= 2  # pylint: disable=protected-access
         self.strategy.mark_synced_from_mt5()
         self.strategy.mark_inherited(skip_marti_stop=self.skip_marti_on_resume)
-        self._recover_comment_state(positions)
-        logger.info("Synced existing MT5 basket: %d legs %s (tickets=%s)", len(positions), direction, [p.ticket for p in positions])
+        self._recover_comment_state(direction_positions)
+        logger.info(
+            "Synced existing MT5 basket: %d legs %s (tickets=%s)",
+            len(direction_positions),
+            direction,
+            [p.ticket for p in direction_positions],
+        )
 
     def _account_info(self):
         info = mt5.account_info()
