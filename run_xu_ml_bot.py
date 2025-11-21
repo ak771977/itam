@@ -152,6 +152,7 @@ class FlippedXUMLBot:
         ]
         # Roughly re-arm BE if we already have at least 2 legs
         self.strategy._be_armed = len(positions) >= 2  # pylint: disable=protected-access
+        self.strategy.mark_synced_from_mt5()
         logger.info("Synced existing MT5 basket: %d legs %s", len(positions), direction)
 
     def _account_info(self):

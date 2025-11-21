@@ -50,6 +50,7 @@ class FlippedStrategy:
         self.arm_after_add = bool(strategy_cfg.get("arm_after_add", True))
         self.arm_profit_dollars = float(strategy_cfg.get("arm_profit_dollars", 0.0))
         self.be_arm_profit_multiple = float(strategy_cfg.get("be_arm_profit_multiple", 0.3))
+        self.resume_grace_ticks = int(strategy_cfg.get("resume_grace_ticks", 3))
 
         # State
         self.basket_open = False
@@ -58,6 +59,7 @@ class FlippedStrategy:
         self.mfe_profit = 0.0  # max favorable excursion
         self.best_price: Optional[float] = None
         self._be_armed = False
+        self._resume_grace_remaining = 0
 
         self.logger.info(
             "FlippedStrategy init | add=%.2f pips, vol0=%.2f, mult=%.2f, hard_stop=$%.2f, trail=%.0f%%",
@@ -132,6 +134,7 @@ class FlippedStrategy:
         self.mfe_profit = 0.0
         self.best_price = price
         self._be_armed = False
+        self._resume_grace_remaining = 0
         self.logger.info("Opened %s basket @ %.5f vol=%.2f", direction, price, self.initial_volume)
         return {
             "action": "OPEN",
@@ -176,6 +179,10 @@ class FlippedStrategy:
 
     def should_close_basket(self, current_price: float, atr_pips: Optional[float] = None) -> Tuple[bool, str]:
         if not self.basket_open:
+            return False, ""
+
+        if self._resume_grace_remaining > 0:
+            self._resume_grace_remaining -= 1
             return False, ""
 
         current_profit = self._current_profit(current_price)
@@ -281,3 +288,7 @@ class FlippedStrategy:
             "mfe_profit": round(self.mfe_profit, 2),
             "_be_armed": self._be_armed,
         }
+
+    def mark_synced_from_mt5(self):
+        """Apply a short grace period after syncing pre-existing baskets to avoid immediate closes."""
+        self._resume_grace_remaining = max(self.resume_grace_ticks, 0)
