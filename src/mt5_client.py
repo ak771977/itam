@@ -89,8 +89,10 @@ class MT5Client:
         logger.info("Closed position %s @ %.5f", position.ticket, result.price)
         return OrderResult(ticket=result.order, price=result.price)
 
-    def close_all(self) -> List[OrderResult]:
+    def close_all(self, tickets: Optional[List[int]] = None) -> List[OrderResult]:
         positions = self.positions()
+        if tickets:
+            positions = [p for p in positions if p.ticket in tickets]
         closed: List[OrderResult] = []
         for pos in positions:
             try:

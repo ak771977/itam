@@ -153,7 +153,7 @@ class FlippedXUMLBot:
         # Roughly re-arm BE if we already have at least 2 legs
         self.strategy._be_armed = len(positions) >= 2  # pylint: disable=protected-access
         self.strategy.mark_synced_from_mt5()
-        logger.info("Synced existing MT5 basket: %d legs %s", len(positions), direction)
+        logger.info("Synced existing MT5 basket: %d legs %s (tickets=%s)", len(positions), direction, [p.ticket for p in positions])
 
     def _account_info(self):
         info = mt5.account_info()
@@ -173,7 +173,8 @@ class FlippedXUMLBot:
         should_close, reason = self.strategy.should_close_basket(current_price, atr_pips=atr_pips)
         if not should_close:
             return
-        closed = self.client.close_all()
+        tickets = [p["ticket"] for p in self.strategy.basket_positions]
+        closed = self.client.close_all(tickets=tickets)
         self.strategy.close_basket(current_price, reason if closed else f"{reason}_FAILED")
 
     def _maybe_add(self, current_price: float):
