@@ -47,9 +47,12 @@ class FlippedStrategy:
         self.trail_atr_k = float(strategy_cfg.get("trail_atr_k", 0.0))
         self.trail_min_profit = float(strategy_cfg.get("trail_min_profit", 0.0))
         self.trail_start_multiple = float(strategy_cfg.get("trail_start_multiple", 0.5))
+        self.trail_enabled = bool(strategy_cfg.get("trail_enabled", True))
+        self.min_ticks_for_trail = int(strategy_cfg.get("min_ticks_for_trail", 0))
         self.arm_after_add = bool(strategy_cfg.get("arm_after_add", True))
         self.arm_profit_dollars = float(strategy_cfg.get("arm_profit_dollars", 0.0))
         self.be_arm_profit_multiple = float(strategy_cfg.get("be_arm_profit_multiple", 0.3))
+        self.min_ticks_for_be = int(strategy_cfg.get("min_ticks_for_be", 0))
         self.resume_grace_ticks = int(strategy_cfg.get("resume_grace_ticks", 3))
 
         # State
@@ -60,6 +63,7 @@ class FlippedStrategy:
         self.best_price: Optional[float] = None
         self._be_armed = False
         self._resume_grace_remaining = 0
+        self._ticks_open = 0
 
         self.logger.info(
             "FlippedStrategy init | add=%.2f pips, vol0=%.2f, mult=%.2f, hard_stop=$%.2f, trail=%.0f%%",
@@ -106,6 +110,8 @@ class FlippedStrategy:
     def _arm_breakeven_if_ready(self, current_profit: float):
         if self._be_armed:
             return
+        if self._ticks_open < self.min_ticks_for_be:
+            return
         if self.arm_after_add and len(self.basket_positions) >= 2:
             self._be_armed = True
             return
@@ -135,6 +141,7 @@ class FlippedStrategy:
         self.best_price = price
         self._be_armed = False
         self._resume_grace_remaining = 0
+        self._ticks_open = 0
         self.logger.info("Opened %s basket @ %.5f vol=%.2f", direction, price, self.initial_volume)
         return {
             "action": "OPEN",
@@ -181,6 +188,7 @@ class FlippedStrategy:
         if not self.basket_open:
             return False, ""
 
+        self._ticks_open += 1
         if self._resume_grace_remaining > 0:
             self._resume_grace_remaining -= 1
             return False, ""
@@ -226,13 +234,14 @@ class FlippedStrategy:
                         return True, "ATR_TRAIL"
 
         # Profit giveback trail with dynamic start based on basket size
-        trail_floor = max(self.trail_min_profit, 0.0)
-        if marti_stop > 0 and self.trail_start_multiple > 0:
-            trail_floor = max(trail_floor, marti_stop * self.trail_start_multiple)
-        if self.mfe_profit > trail_floor:
-            threshold = self.mfe_profit * (1 - self.trail_giveback_pct)
-            if current_profit <= threshold:
-                return True, "TRAIL_GIVEBACK"
+        if self.trail_enabled and self._ticks_open >= self.min_ticks_for_trail:
+            trail_floor = max(self.trail_min_profit, 0.0)
+            if marti_stop > 0 and self.trail_start_multiple > 0:
+                trail_floor = max(trail_floor, marti_stop * self.trail_start_multiple)
+            if self.mfe_profit > trail_floor:
+                threshold = self.mfe_profit * (1 - self.trail_giveback_pct)
+                if current_profit <= threshold:
+                    return True, "TRAIL_GIVEBACK"
 
         # Track best price for trailing
         if self.best_price is None:
@@ -292,3 +301,4 @@ class FlippedStrategy:
     def mark_synced_from_mt5(self):
         """Apply a short grace period after syncing pre-existing baskets to avoid immediate closes."""
         self._resume_grace_remaining = max(self.resume_grace_ticks, 0)
+        self._ticks_open = 0
